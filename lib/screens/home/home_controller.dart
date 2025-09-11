@@ -7,16 +7,18 @@ import 'package:tap_two_play/screens/home/home_state.dart';
 
 part 'home_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class HomeController extends _$HomeController {
   @override
   HomeState build() {
-    _getGamesOnline();
+    Future.microtask(_getGamesOnline);
     return HomeState();
   }
 
   Future<void> _getGamesOnline() async {
+   
     try {
+      state = state.copyWith(isLoading: true);
       
       final response = await http.get(
         Uri.parse(
