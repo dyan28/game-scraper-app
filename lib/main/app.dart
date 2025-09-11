@@ -6,7 +6,7 @@ import 'package:tap_two_play/common/core/routes.dart';
 import 'package:tap_two_play/common/data/local_secure_storage.dart';
 import 'package:tap_two_play/env/env_state.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
-
+final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
 late StateNotifierProvider<ApiClient, EnvState> envProvider;
 Future<void> setupAndRunApp({required EnvState env}) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,9 +49,9 @@ class App extends ConsumerWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.dashboardScreen,
+      navigatorObservers: [routeObserver],
       routes: Routes.routes,
       localizationsDelegates: const [],
-      navigatorObservers: const [],
       builder: (context, child) => GestureDetector(
         // dismiss keyboard when tap outside whole app
         onTap: () =>

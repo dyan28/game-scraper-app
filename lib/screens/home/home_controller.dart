@@ -16,10 +16,9 @@ class HomeController extends _$HomeController {
   }
 
   Future<void> _getGamesOnline() async {
-   
     try {
       state = state.copyWith(isLoading: true);
-      
+
       final response = await http.get(
         Uri.parse(
             'https://script.google.com/macros/s/AKfycbwO9twmnqDVIaltcA-QoutEB8g09U2iAwMAPo6vzjYbt67egVwE4j5jS-Pj4EDlNRLO/exec?limit=10&genreId=GAME_SIMULATION&sheet=game_online'),

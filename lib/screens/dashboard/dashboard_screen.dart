@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tap_two_play/generated/assets.gen.dart';
 import 'package:tap_two_play/screens/dashboard/dashboard_controller.dart';
+import 'package:tap_two_play/screens/games/games_screen.dart';
 import 'package:tap_two_play/screens/home/home_screen.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
+import 'package:tap_two_play/utils/app_text_style.dart';
 import 'package:tap_two_play/utils/utils.dart';
 
 class DashBoardArg {
@@ -29,14 +31,13 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
   static const List<DashboardItem> tabTypes = [
     DashboardItem.online,
     DashboardItem.game,
-   
   ];
   late TabController _tabController;
 
   // 3 Pages in dashboard
   static const pages = [
     HomeScreen(),
-     SizedBox(),
+    GamesScreen(),
   ];
 
   final List<GlobalKey<NavigatorState>> _tabNavKeyList =
@@ -66,31 +67,47 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
             return pages[_tabController.index];
           },
         ),
-        bottomNavigationBar: ConvexAppBar.badge(
-          const {4: ''},
-          height: 65,
-          backgroundColor: AppColors.primary,
-          style: TabStyle.flip,
-          curveSize: 5,
-          items: [
-            TabItem(
-              icon: SvgPicture.asset(
-                Assets.svg.icHome.path,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              ),
-              title: 'Online',
-            ),
-            TabItem(
+        bottomNavigationBar: SizedBox(
+          height: 88,
+          child: BottomNavigationBar(
+            currentIndex: _tabController.index,
+            showSelectedLabels: true,
+            backgroundColor: AppColors.primary,
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Colors.white,
+            selectedLabelStyle: AppTextStyles.textW500S16,
+            unselectedLabelStyle: AppTextStyles.textW500S16,
+            unselectedItemColor: Colors.blueGrey,
+            items: [
+              BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  Assets.svg.icMouse.path,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  Assets.svg.icMobilePlay.path,
+                  height: 24,
+                  width: 24,
+                  colorFilter: ColorFilter.mode(
+                      _tabController.index == 0
+                          ? Colors.white
+                          : Colors.blueGrey,
+                      BlendMode.srcIn),
                 ),
-                title: 'Control'),
-            
-          ],
-          onTap: _onTapItem,
+                label: 'Play',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  height: 24,
+                  width: 24,
+                  Assets.svg.icApp.path,
+                  colorFilter: ColorFilter.mode(
+                    _tabController.index == 1 ? Colors.white : Colors.blueGrey,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Games',
+              ),
+            ],
+            onTap: _onTapItem,
+          ),
         ),
       ),
     );
