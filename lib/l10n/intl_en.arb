@@ -1,0 +1,14 @@
+{
+    "@@locale": "en",
+    "@@last_modified": "",
+    "msgap001": "Home",
+    "@msgap001": {
+      "type": "text",
+      "placeholders": {}
+    },
+    "msgap002": "Chat",
+    "@msgap002": {
+      "type": "text",
+      "placeholders": {}
+    }
+}

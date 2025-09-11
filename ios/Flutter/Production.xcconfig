@@ -1,0 +1,15 @@
+//
+//  Production.xcconfig
+//  Runner
+//
+//  Created by phonght on 18/06/2023.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Generated.xcconfig"
+
+FLUTTER_FLAVOR=production
+PRODUCT_BUNDLE_IDENTIFIER=com.parent.pal.app
+DISPLAY_NAME=ParentsPal
+FLUTTER_TARGET=lib/main/main_production.dart

@@ -1,0 +1,139 @@
+name: tap_two_play
+description: "Ulink logistics User Mobile App"
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.17
+  mocktail: ^1.0.4
+  dio: ^5.7.0
+  freezed_annotation: ^2.4.4
+  freezed: ^2.5.2
+  flutter_native_splash: ^2.4.1
+  flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.3.2
+  json_annotation: ^4.9.0
+  riverpod_annotation: ^2.3.5
+  curl_logger_dio_interceptor: ^1.0.0
+  awesome_dio_interceptor: ^1.2.0
+  local_auth: ^2.3.0
+  local_auth_android: ^1.0.46
+  local_auth_darwin: ^1.4.3
+  intl: ^0.19.0
+  carousel_slider: ^5.0.0
+  image_picker: ^1.1.2
+  dotted_border: ^2.1.0
+  share_plus: ^10.1.4
+  qr_flutter: ^4.1.0
+
+  convex_bottom_bar: ^3.2.0
+  scroll_to_index: ^3.0.1
+  logger: ^2.5.0
+  flutter_keyboard_visibility: ^6.0.0
+  flutter_secure_storage: ^9.0.0
+  percent_indicator: ^4.2.5
+  fl_chart: ^0.71.0
+  card_swiper: ^3.0.1
+  url_launcher: ^6.3.1
+  flutter_launcher_icons: ^0.14.3
+  cached_network_image: ^3.4.1
+
+
+
+
+  #
+  # firebase_core: ^3.13.1
+  # cloud_firestore: ^5.6.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  riverpod_lint: ^2.3.10
+  riverpod_generator: ^2.4.0
+  build_runner: ^2.4.11
+  custom_lint: ^0.6.4
+  mockito: ^5.4.4
+  flutter_lints: ^3.0.0
+  json_serializable: ^6.8.0
+  
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+
+flutter_gen:
+  output: lib/generated/
+  line_length: 80
+
+  # Optional
+  integrations:
+    flutter_svg: true
+    image: true
+    rive: true
+    lottie: true
+
+# TODO: update your splash configuration
+# flutter_native_splash:
+#   android: true
+#   ios: true
+#   web: true
+#   color: "#FFFFFF"
+#   image: assets/images/app_logo.png
+#   ios_content_mode: center
+#   web_image_mode: center
+#   fullscreen: true
+
+#   android_12:
+#     image: assets/images/android12splash.png
+#     icon_background_color: "#FFFFFF"
+#     color: "#FFFFFF"
+
+# TODO: update localization configuration
+# flutter_intl:
+#   enabled: true # Required. Must be set to true to activate the package. Default: false
+#   class_name: L10n # Optional. Sets the name for the generated localization class. Default: S
+#   main_locale: en # Optional. Sets the main locale used for generating localization files. Provided value should consist of language code and optional script and country codes separated with underscore (e.g. 'en', 'en_GB', 'zh_Hans', 'zh_Hans_CN'). Default: en
+#   arb_dir: lib/l10n # Optional. Sets the directory of your ARB resource files. Provided value should be a valid path on your system. Default: lib/l10n
+#   output_dir: lib/l10n # Optional. Sets the directory of generated localization files. Provided value should be a valid path on your system. Default: lib/generated
+#   use_deferred_loading: false # Optional. Must be set to true to generate localization code that is loaded with deferred loading. Default: false
+
+# The following section is specific to Flutter packages.
+flutter:
+  fonts:
+    - family: SFProDisplayBold
+      fonts:
+        - asset: assets/fonts/Sf_Pro_Display_Bold.otf
+    - family: SFProDisplaySemiBold
+      fonts:
+        - asset: assets/fonts/Sf_Pro_Display_Semibold.otf
+    - family: SFProDisplayLight
+      fonts:
+        - asset: assets/fonts/Sf_Pro_Display_Light.otf
+    - family: SFProDisplayMedium
+      fonts:
+        - asset: assets/fonts/Sf_Pro_Display_Medium.otf
+    - family: SFProDisplayRegular
+      fonts:
+        - asset: assets/fonts/Sf_Pro_Display_Regular.otf
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/svg/
+    - assets/fonts/

@@ -1,0 +1,86 @@
+version: 2.1
+
+executors:
+  default_android:
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+    docker:
+      - image: cirrusci/flutter:3.1.3
+
+  default_ios:
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+    macos:
+      xcode: "14.2.0"
+
+commands:
+  install_dart_packages:
+    steps:
+      - run:
+          name: Install Dart Packages
+          command: flutter pub get
+
+  generate_code:
+    steps:
+      - run:
+          name: Generate code
+          command: flutter pub run build_runner build --delete-conflicting-outputs
+      - run:
+          name: Generate intl
+          command: flutter pub run intl_utils:generate
+
+  # run_danger:
+  #   steps:
+  #     - run:
+  #         name: Run flutter analyze
+  #         command: flutter analyze > flutter_analyze_report.txt || true
+  #     - store_artifacts:
+  #         path: flutter_analyze_report.txt
+  #     - run:
+  #         name: Run Danger
+  #         command: bundle exec danger
+
+  select_xcode:
+    steps:
+      - run:
+          name: Set Xcode path
+          command: sudo xcode-select -s /Applications/Xcode-14.2.app/Contents/Developer
+      - run:
+          name: Checking Xcode path
+          command: xcode-select -p
+
+  # restore_dart_package_cache:
+  #   steps:
+  #     - restore_cache:
+  #         keys:
+  #           - 1-gems-{{ checksum "Gemfile.lock" }}
+  #           - dart-dependencies-
+  #     - run:
+  #         name: Restore Dart package cache
+  #         command: bundle check || bundle install --path vendor/bundle --clean
+
+  # save_dart_package_cache:
+  #   steps:
+  #     - save_cache:
+  #         paths:
+  #           - .dart_tool/build
+  #         key: dart-dependencies-
+
+jobs:
+  lint:
+    executor: default_android
+    steps:
+      - checkout
+      # - restore_dart_package_cache
+      - install_dart_packages
+      - generate_code
+      # - save_dart_package_cache
+      # - run_danger
+
+workflows:
+  version: 2
+  check:
+    jobs:
+      - lint

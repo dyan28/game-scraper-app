@@ -1,0 +1,190 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tap_two_play/common/core/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class Util {
+  Util._();
+  static String convertPrice(var price) {
+    var f = NumberFormat("#,###", "vi_VI");
+    price = f.format(price);
+    return price;
+  }
+
+  static List<int> listMonth() {
+    const month = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ];
+    return month;
+  }
+
+  static List<int> listYear() {
+    int currentYear = DateTime.now().year;
+
+    List<int> years = [];
+
+    for (int i = currentYear - 15; i <= currentYear + 15; i++) {
+      years.add(i);
+    }
+    return years;
+  }
+
+  static List<String> splitParagraphIntoSentencesWithPunctuation(
+      String paragraph) {
+    // This regular expression captures the sentence content AND the punctuation.
+    // It looks for any characters (non-greedy) followed by a sentence-ending punctuation,
+    // potentially with some whitespace, and then either another sentence or the end of the string.
+    final RegExp sentenceSplitter = RegExp(r'[^.!?]+[.!?]+(?:\s+|\n|$)');
+
+    List<String> sentences = [];
+    int start = 0;
+
+    while (start < paragraph.length) {
+      RegExpMatch? match =
+          sentenceSplitter.firstMatch(paragraph.substring(start));
+
+      if (match != null) {
+        // The matched string includes the sentence and its punctuation, plus any trailing whitespace.
+        String sentence = match.group(0)!;
+        sentences.add(
+            sentence.trim()); // Trim to remove any excess whitespace at the end
+        start += sentence.length;
+      } else {
+        // If no more full sentences are found, add any remaining text as a final "sentence".
+        String remainingText = paragraph.substring(start).trim();
+        if (remainingText.isNotEmpty) {
+          sentences.add(remainingText);
+        }
+        break;
+      }
+    }
+
+    return sentences;
+  }
+
+  static List<String> convertStringToWordList(String text) {
+    // This regular expression captures words and ensures punctuation stays with them.
+    // It looks for sequences of non-whitespace characters, optionally followed by
+    // punctuation marks (like commas, periods, question marks, exclamation marks).
+    final RegExp wordWithPunctuation = RegExp(r'\S+[.,!?]*');
+
+    List<String> words = [];
+
+    // Find all matches of the pattern in the input text
+    Iterable<RegExpMatch> matches = wordWithPunctuation.allMatches(text);
+
+    for (final match in matches) {
+      // Add the matched word (which includes its punctuation) to the list
+      words.add(match.group(0)!);
+    }
+
+    return words;
+  }
+
+  static Future<void> launchInWebView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+}
+
+mixin Utils {
+  static final navigatorState = Constants.navigatorKey.currentState;
+
+  // Get size safe area for screen
+  EdgeInsets get sizeSafeArea => MediaQueryData.fromView(ui.window).padding;
+
+  // Check device has notch or not
+  bool get hasNotch => sizeSafeArea.bottom > 0;
+  double screenHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height;
+
+  double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
+
+  void popWithoutContext([dynamic value]) {
+    navigatorState?.pop(value);
+  }
+
+  Future<dynamic>? pushReplacementNamed(
+    String routeName, {
+    Object? arguments,
+  }) {
+    return navigatorState?.pushReplacementNamed(
+      routeName,
+      arguments: arguments,
+    );
+  }
+
+  Future<dynamic> push(
+    BuildContext context,
+    Widget route, {
+    RouteSettings? settings,
+    bool fullscreenDialog = false,
+  }) async {
+    if (Platform.isIOS) {
+      return Navigator.of(context, rootNavigator: true).push<dynamic>(
+        CupertinoPageRoute<dynamic>(
+          builder: (BuildContext context) => route,
+          settings: settings,
+        ),
+      );
+    }
+    return navigatorState?.push<dynamic>(
+      MaterialPageRoute<dynamic>(
+        builder: (context) => route,
+        fullscreenDialog: fullscreenDialog,
+        settings: settings,
+      ),
+    );
+  }
+
+  Future<dynamic> pushName(
+    BuildContext context,
+    String routeName, {
+    Object? arguments,
+    bool fullscreenDialog = false,
+  }) async {
+    return Navigator.of(context, rootNavigator: true).pushNamed<dynamic>(
+      routeName,
+      arguments: arguments,
+    );
+  }
+
+  Future<dynamic>? pushAndRemoveUntil(Widget routerName) {
+    return navigatorState?.pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => routerName), (route) => false);
+  }
+
+  Future<dynamic> pushReplacement(Widget routerName) {
+    return navigatorState!.pushReplacement(
+      MaterialPageRoute<dynamic>(builder: (context) => routerName),
+    );
+  }
+
+  Future<dynamic> pushNamedAndRemoveUntil(
+    BuildContext context,
+    String routerName,
+  ) {
+    return Navigator.pushNamedAndRemoveUntil(
+        context, routerName, (route) => false);
+  }
+
+  void unFocusScope(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+}
