@@ -6,8 +6,9 @@ import 'package:tap_two_play/components/expandable_text.dart';
 import 'package:tap_two_play/models/game.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:tap_two_play/utils/app_text_style.dart';
+import 'package:tap_two_play/utils/utils.dart';
 
-class GameDetailScreen extends ConsumerWidget {
+class GameDetailScreen extends ConsumerWidget with Utils {
   const GameDetailScreen({super.key, required this.game});
   final Game game;
   @override
@@ -77,11 +78,15 @@ class GameDetailScreen extends ConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        game.title ?? '',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: screenWidth(context) * 0.7, // hoặc số px cụ thể
+                        child: Text(
+                          game.title ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Text(
@@ -103,19 +108,25 @@ class GameDetailScreen extends ConsumerWidget {
                     ],
                   ),
                   const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.buttonPrimaryGreenDark,
-                    ),
-                    child: Text(
-                      'Download',
-                      style: AppTextStyles.defaultMedium.copyWith(
-                        color: AppColors.white,
-                      ),
-                    ),
-                  )
+                 
                 ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              height: 38,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.buttonPrimaryGreenDark,
+                ),
+                child: Text(
+                  'Download',
+                  style: AppTextStyles.defaultMedium.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
               ),
             ),
             Container(
