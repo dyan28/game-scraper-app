@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:tap_two_play/utils/app_text_style.dart';
 
@@ -30,14 +30,15 @@ class StoreGameTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 2),
-        decoration: const BoxDecoration(
+        // margin: const EdgeInsets.symmetric(vertical: 2),
+
+        decoration: BoxDecoration(
           color: AppColors.black393939,
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
               child: Row(
@@ -111,10 +112,10 @@ class StoreGameTile extends StatelessWidget {
                       backgroundColor: const Color(0xFF2DBA74),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                          horizontal: 8, vertical: 4),
                       minimumSize: const Size(0, 0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: Text(
@@ -130,14 +131,17 @@ class StoreGameTile extends StatelessWidget {
               ),
             ),
             // Banner
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: ClipRRect(
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(16)),
+              child: SizedBox(
+                height: 140,
+                width: double.infinity,
                 child: CachedNetworkImage(
                   imageUrl: bannerUrl,
                   fit: BoxFit.cover,
                   placeholder: (_, __) =>
-                      Container(color: const Color(0xFF1E1E1E)),
+                      Container(color: Colors.white),
                   errorWidget: (_, __, ___) => Container(
                     color: const Color(0xFF1E1E1E),
                     alignment: Alignment.center,
@@ -146,7 +150,7 @@ class StoreGameTile extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+),
           ],
         ),
       ),

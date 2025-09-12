@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tap_two_play/components/game_card.dart';
+import 'package:tap_two_play/components/loading_indicator.dart';
 import 'package:tap_two_play/main/app.dart';
 import 'package:tap_two_play/models/online_game_res.dart';
 import 'package:tap_two_play/screens/home/components/game_search_delegate.dart';
@@ -82,8 +83,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
       ),
       body: state.isLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.red,
+              child: LoadingIndicator(
+              
               ),
             )
           : GridView.builder(

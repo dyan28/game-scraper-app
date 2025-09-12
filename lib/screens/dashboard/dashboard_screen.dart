@@ -1,11 +1,10 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tap_two_play/generated/assets.gen.dart';
 import 'package:tap_two_play/screens/dashboard/dashboard_controller.dart';
-import 'package:tap_two_play/screens/games/games_screen.dart';
+import 'package:tap_two_play/screens/games/game_discovery_page.dart';
 import 'package:tap_two_play/screens/home/home_screen.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:tap_two_play/utils/app_text_style.dart';
@@ -37,7 +36,7 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
   // 3 Pages in dashboard
   static const pages = [
     HomeScreen(),
-    GamesScreen(),
+    GameDiscoveryPage(),
   ];
 
   final List<GlobalKey<NavigatorState>> _tabNavKeyList =
@@ -68,7 +67,7 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
           },
         ),
         bottomNavigationBar: SizedBox(
-          height: 88,
+          height: 74,
           child: BottomNavigationBar(
             currentIndex: _tabController.index,
             showSelectedLabels: true,
@@ -76,15 +75,17 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Colors.white,
-            selectedLabelStyle: AppTextStyles.textW500S16,
-            unselectedLabelStyle: AppTextStyles.textW500S16,
+            selectedLabelStyle:
+                AppTextStyles.textW500S16.copyWith(fontSize: 14),
+            unselectedLabelStyle:
+                AppTextStyles.textW500S16.copyWith(fontSize: 14),
             unselectedItemColor: Colors.blueGrey,
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   Assets.svg.icMobilePlay.path,
-                  height: 24,
-                  width: 24,
+                  height: 16,
+                  width: 16,
                   colorFilter: ColorFilter.mode(
                       _tabController.index == 0
                           ? Colors.white
@@ -95,8 +96,8 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  height: 24,
-                  width: 24,
+                  height: 16,
+                  width: 16,
                   Assets.svg.icApp.path,
                   colorFilter: ColorFilter.mode(
                     _tabController.index == 1 ? Colors.white : Colors.blueGrey,

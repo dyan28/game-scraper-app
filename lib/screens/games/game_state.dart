@@ -8,6 +8,7 @@ class GameState with _$GameState {
   factory GameState({
     @Default(false) bool isLoading,
     @Default([]) List<Game> games,
+    @Default([]) List<Game> gamePage,
     @Default(0) int currentPlayerIndex,
   }) = _GameState;
 }

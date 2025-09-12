@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tap_two_play/api/api_client.dart';
@@ -39,13 +40,19 @@ class App extends ConsumerWidget {
       scaffoldMessengerKey: Constants.snackBarKey,
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
         scaffoldBackgroundColor: AppColors.backgroundLightGray,
         appBarTheme: const AppBarTheme(
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
           color: AppColors.backgroundLightGray, //<-- SEE HERE
         ),
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+              transitionType: SharedAxisTransitionType
+                  .scaled,
+            ),
+          })
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.dashboardScreen,
