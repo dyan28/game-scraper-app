@@ -1,11 +1,12 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:tap_two_play/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 class GameWebViewPage extends StatefulWidget {
   const GameWebViewPage({
@@ -27,7 +28,15 @@ class _GameWebViewPageState extends State<GameWebViewPage> with Utils {
   @override
   void initState() {
     super.initState();
+// Cho phép xoay tự do theo cảm biến khi đang ở trang game
+    SystemChrome.setPreferredOrientations(const [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
 
+    // Ẩn system UI khi chơi cho đã (tuỳ chọn)
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     // Đảm bảo platform implementation đã set (tránh lỗi assertion)
     if (Platform.isAndroid) {
       WebViewPlatform.instance ??= AndroidWebViewPlatform();
@@ -58,6 +67,12 @@ class _GameWebViewPageState extends State<GameWebViewPage> with Utils {
 
     // nạp từ iframe HTML (CÁCH 2)
     loadFromIframeHtml(_c, widget.iframeHtml, title: widget.title);
+  }
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations(const [DeviceOrientation.portraitUp]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 
   Future<void> loadFromIframeHtml(
@@ -112,6 +127,7 @@ class _GameWebViewPageState extends State<GameWebViewPage> with Utils {
       ),
     );
   }
+  
 
   String? extractIframeSrc(String iframeHtml) {
     final m = RegExp(r'<iframe[^>]*\ssrc="([^"]+)"', caseSensitive: false)

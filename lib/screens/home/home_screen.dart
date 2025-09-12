@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tap_two_play/components/game_card.dart';
 import 'package:tap_two_play/main/app.dart';
 import 'package:tap_two_play/models/online_game_res.dart';
-import 'package:tap_two_play/screens/game_web_view_page.dart';
 import 'package:tap_two_play/screens/home/components/game_search_delegate.dart';
 import 'package:tap_two_play/screens/home/home_controller.dart';
 import 'package:tap_two_play/utils/app_text_style.dart';
