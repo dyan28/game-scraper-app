@@ -55,7 +55,7 @@ flutter build apk --debug --flavor production -t lib/main/main_production.dart
 
 # release
 flutter build appbundle --release --flavor development -t lib/main/main_development.dart
-flutter build appbundle --release --flavor production -t lib/main/main_production.dart
+flutter build apk --release --flavor production -t lib/main/main_production.dart
 ```
 
 ### iOS
