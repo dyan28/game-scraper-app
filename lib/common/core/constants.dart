@@ -5,6 +5,8 @@ class Constants {
 
   static const String studyCollection = 'STUDY-COLLECTION';
   static const String userSettings = 'USER-SETTINGS';
+  static const String APP_GAME = 'app_game';
+  static const String APP_GAME_ONLINE = 'game_online';
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   static GlobalKey<ScaffoldMessengerState> snackBarKey =

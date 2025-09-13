@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -15,22 +16,47 @@ class Util {
     return price;
   }
 
-  static List<int> listMonth() {
-    const month = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-    ];
-    return month;
+  static bool _isHttpUrl(String s) {
+    final u = Uri.tryParse(s);
+    return u != null &&
+        u.hasScheme &&
+        (u.scheme == 'http' || u.scheme == 'https') &&
+        u.host.isNotEmpty;
+  }
+
+  static List<String> toUrlList(dynamic value) {
+    if (value == null) return [];
+
+    // Nếu Supabase đã là mảng (jsonb[]), trả về luôn
+    if (value is List) {
+      final cleaned = value
+          .map((e) => e.toString().trim())
+          .where((s) => s.isNotEmpty && _isHttpUrl(s));
+      final seen = <String>{};
+      return cleaned.where((s) => seen.add(s)).toList();
+    }
+
+    if (value is String) {
+      final s = value.trim();
+
+      // Nếu là JSON array dạng "[...]", thử parse JSON trước
+      if (s.startsWith('[')) {
+        try {
+          final arr = jsonDecode(s);
+          if (arr is List) return toUrlList(arr);
+        } catch (_) {/* fall back split by comma */}
+      }
+
+      // Mặc định: tách theo dấu phẩy (có thể có khoảng trắng)
+      final parts = s.split(RegExp(r'\s*,\s*'));
+      final cleaned = parts
+          .map((e) => e.trim())
+          .where((x) => x.isNotEmpty && _isHttpUrl(x));
+      final seen = <String>{};
+      return cleaned.where((x) => seen.add(x)).toList();
+    }
+
+    return [];
   }
 
   static List<int> listYear() {
