@@ -54,6 +54,7 @@ dependencies:
   supabase_flutter: ^2.10.0
 
   in_app_update: ^4.2.3
+  google_mobile_ads: ^6.0.0
 
 
 

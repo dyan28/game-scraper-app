@@ -113,7 +113,7 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                           crossAxisCount: 2,
                           mainAxisSpacing: 16,
                           crossAxisSpacing: 16,
-                          childAspectRatio: 0.9,
+                          childAspectRatio: 0.87,
                         ),
                         itemCount: state.games.length,
                         physics: const NeverScrollableScrollPhysics(),
@@ -191,7 +191,6 @@ class GameCard extends StatelessWidget with Utils {
 
   @override
   Widget build(BuildContext context) {
-    print('state.gamePage[index].headerImage $imageUrl');
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(

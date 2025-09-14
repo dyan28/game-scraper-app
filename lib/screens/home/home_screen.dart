@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tap_two_play/components/ad_common.dart';
 import 'package:tap_two_play/components/custom_drawer_menu.dart';
 import 'package:tap_two_play/components/game_card.dart';
 import 'package:tap_two_play/components/loading_indicator.dart';
+import 'package:tap_two_play/components/smart_banner.dart';
 import 'package:tap_two_play/main/app.dart';
 import 'package:tap_two_play/models/online_game_res.dart';
 import 'package:tap_two_play/screens/home/components/game_search_delegate.dart';
@@ -23,10 +25,13 @@ class HomeScreen extends ConsumerStatefulWidget with Utils {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
+  late final AdManager _ads;
   @override
   void initState() {
     super.initState();
     _forcePortrait();
+    _ads = AdManager();
+    _ads.preloadInterstitial();
   }
 
   void _forcePortrait() {
@@ -51,6 +56,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
     final state = ref.watch(homeControllerProvider);
     final notifier = ref.read(homeControllerProvider.notifier);
 
+    final games = state.gamesOnline;
+    const crossAxisCount = 2;
+
+    final firstRowCount = state.gamesOnline.length >= crossAxisCount
+        ? crossAxisCount
+        : state.gamesOnline.length;
     return Scaffold(
       drawer: const CustomDrawerMenu(),
       appBar: AppBar(
@@ -87,23 +98,56 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
           ? const Center(
               child: LoadingIndicator(),
             )
-          : GridView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.gamesOnline.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.86,
-              ),
-              itemBuilder: (context, index) {
-                final item = state.gamesOnline[index];
-                if (item is _AdMarker) {
-                  return const AdGridTile();
-                } else {
-                  return GameCard(game: item);
-                }
-              },
+          : CustomScrollView(
+              slivers: [
+                const SliverToBoxAdapter(
+                  child: SmartBanner(),
+                ),
+                // ===== GRID: HÀNG 1 =====
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 0.86,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => GameCard(game: games[index]),
+                      childCount: 6, // chỉ 4 item đầu
+                    ),
+                  ),
+                ),
+
+                // ===== HÀNG 2: QUẢNG CÁO FULL-WIDTH =====
+                const SliverToBoxAdapter(
+                  child: AdBannerSlot(),
+                ),
+
+                // ===== GRID: CÁC HÀNG SAU =====
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 0.86,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, idx) {
+                        final game = games[firstRowCount + idx];
+                        return GameCard(game: game);
+                      },
+                      childCount:
+                          (games.length - firstRowCount).clamp(0, games.length),
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }
@@ -162,4 +206,17 @@ class AdGridTile extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Object> withAdAtRow({
+  required List<OnlineGameRes> games,
+  int crossAxisCount = 2,
+  int rowIndex = 1, // 0-based: hàng thứ 2
+  int colIndex = 0, // 0 = cột trái, 1 = cột phải
+}) {
+  final items = List<Object>.from(games);
+  final adPos = (rowIndex * crossAxisCount) + colIndex; // vị trí hiển thị
+  final insertAt = adPos.clamp(0, items.length);
+  items.insert(insertAt, const _AdMarker());
+  return items;
 }

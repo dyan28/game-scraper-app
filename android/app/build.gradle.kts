@@ -33,10 +33,12 @@ android {
         applicationId = "com.htp.taptwoplay"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-3940256099942544~3347511713"
     }
      signingConfigs {
         create("release") {
@@ -51,14 +53,24 @@ android {
     }
 
    
-     buildTypes {
-        debug {
-            // ✅ 'debug { }' phải nằm TRONG 'buildTypes { }'
+    buildTypes {
+        // ⚠️ Kotlin DSL: dùng getByName thay vì debug { } / release { } kiểu Groovy
+        getByName("debug") {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("release") // hoặc bỏ nếu không ký debug
+            // Nếu muốn ký debug bằng keystore release (không bắt buộc):
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            // DÙNG TEST APP ID CHO DEBUG
+            manifestPlaceholders["ADMOB_APP_ID"] =
+                "ca-app-pub-3940256099942544~3347511713" // TEST App ID
         }
-        release {
+        getByName("release") {
             isMinifyEnabled = true
+            // DÙNG APP ID THẬT CHO RELEASE
+            manifestPlaceholders["ADMOB_APP_ID"] =
+                "ca-app-pub-3940256099942544~334751171" // PROD App ID của bạn
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
