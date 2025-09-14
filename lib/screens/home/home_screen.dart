@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tap_two_play/components/custom_drawer_menu.dart';
 import 'package:tap_two_play/components/game_card.dart';
 import 'package:tap_two_play/components/loading_indicator.dart';
 import 'package:tap_two_play/main/app.dart';
@@ -51,6 +52,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
     final notifier = ref.read(homeControllerProvider.notifier);
 
     return Scaffold(
+      drawer: const CustomDrawerMenu(),
       appBar: AppBar(
         centerTitle: false,
         title: Text('Online Game', style: AppTextStyles.defaultBoldAppBar),
@@ -83,9 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
       ),
       body: state.isLoading
           ? const Center(
-              child: LoadingIndicator(
-              
-              ),
+              child: LoadingIndicator(),
             )
           : GridView.builder(
               padding: const EdgeInsets.all(16),
