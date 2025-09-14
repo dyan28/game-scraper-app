@@ -66,10 +66,11 @@ android {
                 "ca-app-pub-3940256099942544~3347511713" // TEST App ID
         }
         getByName("release") {
-            isMinifyEnabled = true
+             isMinifyEnabled = false
+             isShrinkResources = false
             // DÙNG APP ID THẬT CHO RELEASE
             manifestPlaceholders["ADMOB_APP_ID"] =
-                "ca-app-pub-3940256099942544~334751171" // PROD App ID của bạn
+                "ca-app-pub-7943717185437931~4581298597" // PROD App ID của bạn
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
