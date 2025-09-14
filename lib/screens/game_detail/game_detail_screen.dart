@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tap_two_play/components/expandable_text.dart';
 import 'package:tap_two_play/models/game.dart';
+import 'package:tap_two_play/screens/game_detail/game_meta_card.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:tap_two_play/utils/app_text_style.dart';
 import 'package:tap_two_play/utils/utils.dart';
@@ -108,7 +109,6 @@ class GameDetailScreen extends ConsumerWidget with Utils {
                     ],
                   ),
                   const Spacer(),
-                 
                 ],
               ),
             ),
@@ -129,109 +129,13 @@ class GameDetailScreen extends ConsumerWidget with Utils {
                 ),
               ),
             ),
-            Container(
-              height: 120,
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(16),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.backgroundFaintGray,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Score: ',
-                          style: AppTextStyles.defaultFont,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: game.scoreText ?? '',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.contentColorBlue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Installs: ',
-                          style: AppTextStyles.defaultFont,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: game.installs ?? '',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.contentColorBlue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Developer: ',
-                          style: AppTextStyles.defaultFont,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: game.developer ?? '',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.contentColorBlue),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Ratings: ',
-                          style: AppTextStyles.defaultFont,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: game.ratings.toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.contentColorBlue),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Released: ',
-                          style: AppTextStyles.defaultFont,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: game.released.toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.contentColorBlue),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            GameMetaCard(
+              score: double.tryParse(game.scoreText ?? '') ?? 0,
+              installs: game.installs,
+              developerName: game.developer ?? 'Unknown',
+              developerUrl: Uri.parse(''),
+              ratings: game.ratings ?? 0,
+              released: DateTime.tryParse(game.updated ?? ''),
             ),
             SizedBox(
               height: 200,
@@ -274,11 +178,51 @@ class GameDetailScreen extends ConsumerWidget with Utils {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Description',
-                    style: AppTextStyles.defaultBoldAppBar,
+                    'Summary',
+                    style: AppTextStyles.defaultBoldAppBar.copyWith(
+                      fontSize: 24,
+                    ),
                   ),
                   ExpandableText(
+                    game.summary ?? '',
+                    trimWords: 50,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Description',
+                        style: AppTextStyles.defaultBoldAppBar.copyWith(
+                          fontSize: 24,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'More',
+                            style: AppTextStyles.defaultMedium.copyWith(
+                              color: AppColors.primaryBlueMedium,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const Icon(Icons.keyboard_arrow_right,
+                              size: 16, color: AppColors.primaryBlueMedium),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Text(game.summary ?? ''),
+                  ExpandableText(
                     game.description ?? '',
+                    trimWords: 30,
                   ),
                 ],
               ),

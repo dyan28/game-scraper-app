@@ -41,8 +41,8 @@ class GameCard extends StatelessWidget with Utils {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // icon / poster
-            AspectRatio(
-              aspectRatio: 1.2,
+            SizedBox(
+              height: screenHeight(context) * 0.14,
               child: ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(14)),
@@ -103,6 +103,21 @@ class GameCard extends StatelessWidget with Utils {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ).copyWith(top: 4),
+              child: Text(
+                game.developer ?? '—',
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.white,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

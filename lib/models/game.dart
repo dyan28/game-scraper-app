@@ -1,60 +1,50 @@
 import 'dart:convert';
 
-import 'package:tap_two_play/utils/utils.dart';
-
 class Game {
+  final int? id;
   final String? appId;
   final String? title;
-  final String? developer;
-  final String? genreId;
-  final String? version;
+  final String? description;
+  final String? summary;
   final String? installs;
   final String? scoreText;
-  final String? ratings;
-  final String? reviews;
+  final int? ratings;
+  final int? reviews;
   final String? androidVersion;
-  final String? androidMaxVersion;
   final String? androidVersionText;
-  final String? contentRating;
-  final String? contentRatingDescription;
-  final String? released;
-  final String? updated;
-  final String? summary;
-  final String? description;
+  final String? developer;
+  final String? genreId;
   final String? icon;
   final String? headerImage;
   final List<String>? screenshots;
-  final String? video;
-  final String? videoImage;
-  final String? previewVideo;
+  final String? released;
+  final String? updated;
+  final String? version;
   final String? url;
+  final bool? inTop;
 
   Game({
+    this.id,
     this.appId,
     this.title,
-    this.developer,
-    this.genreId,
-    this.version,
+    this.description,
+    this.summary,
     this.installs,
     this.scoreText,
     this.ratings,
     this.reviews,
     this.androidVersion,
-    this.androidMaxVersion,
     this.androidVersionText,
-    this.contentRating,
-    this.contentRatingDescription,
-    this.released,
-    this.updated,
-    this.summary,
-    this.description,
+    this.developer,
+    this.genreId,
     this.icon,
     this.headerImage,
     this.screenshots,
-    this.video,
-    this.videoImage,
-    this.previewVideo,
+    this.released,
+    this.updated,
+    this.version,
     this.url,
+    this.inTop,
   });
 
   factory Game.fromRawJson(String str) => Game.fromJson(json.decode(str));
@@ -62,62 +52,54 @@ class Game {
   String toRawJson() => json.encode(toJson());
 
   factory Game.fromJson(Map<String, dynamic> json) => Game(
-        appId: json["appId"].toString(),
-        title: json["title"].toString(),
-        developer: json["developer"].toString(),
-        genreId: json["genreId"].toString(),
-        version: json["version"].toString(),
-        installs: json["installs"].toString(),
-        scoreText: json["scoreText"].toString(),
-        ratings: json["ratings"].toString(),
-        reviews: json["reviews"].toString(),
-        androidVersion: json["androidVersion"].toString(),
-        androidMaxVersion: json["androidMaxVersion"].toString(),
-        androidVersionText: json["androidVersionText"].toString(),
-        contentRating: json["contentRating"].toString(),
-        contentRatingDescription: json["contentRatingDescription"].toString(),
-        released: json["released"].toString(),
-        updated: json["updated"].toString(),
-        summary: json["summary"].toString(),
-        description: json["description"].toString(),
-        icon: json["icon"].toString(),
-        headerImage: json["headerImage"].toString(),
+        id: json["id"],
+        appId: json["app_id"],
+        title: json["title"],
+        description: json["description"],
+        summary: json["summary"],
+        installs: json["installs"],
+        scoreText: json["score_text"],
+        ratings: json["ratings"],
+        reviews: json["reviews"],
+        androidVersion: json["android_version"],
+        androidVersionText: json["android_version_text"],
+        developer: json["developer"],
+        genreId: json["genre_id"],
+        icon: json["icon"],
+        headerImage: json["header_image"],
         screenshots: json["screenshots"] == null
             ? []
-            : Util.toUrlList(json["screenshots"]),
-        video: json["video"].toString(),
-        videoImage: json["videoImage"].toString(),
-        previewVideo: json["previewVideo"].toString(),
-        url: json["url"].toString(),
+            : List<String>.from(json["screenshots"]!.map((x) => x)),
+        released: json["released"],
+        updated: json["updated"],
+        version: json["version"],
+        url: json["url"],
+        inTop: json["in_top"],
       );
 
   Map<String, dynamic> toJson() => {
-        "appId": appId,
+        "id": id,
+        "app_id": appId,
         "title": title,
-        "developer": developer,
-        "genreId": genreId,
-        "version": version,
+        "description": description,
+        "summary": summary,
         "installs": installs,
-        "scoreText": scoreText,
+        "score_text": scoreText,
         "ratings": ratings,
         "reviews": reviews,
-        "androidVersion": androidVersion,
-        "androidMaxVersion": androidMaxVersion,
-        "androidVersionText": androidVersionText,
-        "contentRating": contentRating,
-        "contentRatingDescription": contentRatingDescription,
-        "released": released,
-        "updated": updated,
-        "summary": summary,
-        "description": description,
+        "android_version": androidVersion,
+        "android_version_text": androidVersionText,
+        "developer": developer,
+        "genre_id": genreId,
         "icon": icon,
-        "headerImage": headerImage,
+        "header_image": headerImage,
         "screenshots": screenshots == null
             ? []
             : List<dynamic>.from(screenshots!.map((x) => x)),
-        "video": video,
-        "videoImage": videoImage,
-        "previewVideo": previewVideo,
+        "released": released,
+        "updated": updated,
+        "version": version,
         "url": url,
+        "in_top": inTop,
       };
 }

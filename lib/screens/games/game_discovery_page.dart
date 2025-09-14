@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tap_two_play/components/loading_indicator.dart';
 import 'package:tap_two_play/screens/game_detail/game_detail_screen.dart';
+import 'package:tap_two_play/screens/all_games/all_game.dart';
 import 'package:tap_two_play/screens/games/components/store_game_tile.dart';
 import 'package:tap_two_play/screens/games/game_controller.dart';
 import 'package:tap_two_play/utils/app_colors.dart';
+import 'package:tap_two_play/utils/app_text_style.dart';
 import 'package:tap_two_play/utils/utils.dart';
 
 class GameDiscoveryPage extends ConsumerStatefulWidget {
@@ -27,6 +29,7 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
             )
           : SafeArea(
               child: SingleChildScrollView(
+                padding: const EdgeInsets.only(bottom: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -38,23 +41,27 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                       ),
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: [
-                          _buildTab("Hot 🔥", true),
-                          _buildTab("News 🎮", false),
-                          _buildTab("Puzzle 🧩", false),
-                          _buildTab("Action ⚔️", false),
-                          _buildTab("Sports ⚽", false),
-                        ],
+                        children: CategoryGame.values
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  notifier.onChangePlayer(e);
+                                },
+                                child: _buildTab(e.name, state.category == e),
+                              ),
+                            )
+                            .toList(),
                       ),
                     ),
 
                     // 🎮 Game carousel
                     SizedBox(
-                      height: screenHeight(context) * 0.3,
+                      height: screenHeight(context) * 0.28,
                       child: PageView(
-                          controller: PageController(viewportFraction: 0.7),
-                          children:
-                              List.generate(state.gamePage.length, (index) {
+                        controller: PageController(viewportFraction: 0.7),
+                        children: List.generate(
+                          state.gamePage.length,
+                          (index) {
                             return GestureDetector(
                               onTap: () {
                                 push(context,
@@ -62,56 +69,54 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                               },
                               child: GameCard(
                                 title: state.gamePage[index].title ?? '',
-                                rating: state.games[index].scoreText ?? '',
-                                imageUrl: state.games[index].headerImage ??
-                                    state.games[index].screenshots?.first ??
-                                    '',
+                                rating: state.gamePage[index].scoreText ?? '',
+                                imageUrl:
+                                    state.gamePage[index].headerImage ?? '',
                                 buttonText: "Download",
                               ),
                             );
-                          })),
-                    ),
-
-                    Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.7),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 6,
-                              offset: const Offset(0, 3),
-                            )
-                          ],
-                        ),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Search games...",
-                            icon: Icon(Icons.search, color: Colors.black54),
-                          ),
+                          },
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              push(context, const AllGame());
+                            },
+                            child: Text(
+                              'More...',
+                              style: AppTextStyles.defaultBoldAppBar.copyWith(
+                                fontSize: 16,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     SizedBox(
                       width: screenWidth(context),
-                      height: screenHeight(context) * 0.5,
                       child: GridView.builder(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
-                        scrollDirection: Axis.horizontal,
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        scrollDirection: Axis.vertical,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 16,
                           crossAxisSpacing: 16,
-                          childAspectRatio: 1,
+                          childAspectRatio: 0.9,
                         ),
                         itemCount: state.games.length,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return GestureDetector(
@@ -144,7 +149,7 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
 
   Widget _buildTab(String title, bool isActive) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       margin: const EdgeInsets.only(right: 4),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -186,6 +191,7 @@ class GameCard extends StatelessWidget with Utils {
 
   @override
   Widget build(BuildContext context) {
+    print('state.gamePage[index].headerImage $imageUrl');
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(

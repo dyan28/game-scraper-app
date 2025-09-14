@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tap_two_play/common/core/constants.dart';
 import 'package:tap_two_play/models/online_game_res.dart';
 import 'package:tap_two_play/screens/home/home_state.dart';
 
@@ -20,10 +21,10 @@ class HomeController extends _$HomeController {
     try {
       state = state.copyWith(isLoading: true);
       final data = await supabase
-          .from('game_online')
+          .from(Constants.APP_GAME_ONLINE)
           .select()
           .order(
-            'releaseDate',
+            'release_date',
             ascending: false,
             nullsFirst: false,
           )

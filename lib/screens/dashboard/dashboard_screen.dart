@@ -79,7 +79,7 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
                 AppTextStyles.textW500S16.copyWith(fontSize: 14),
             unselectedLabelStyle:
                 AppTextStyles.textW500S16.copyWith(fontSize: 14),
-            unselectedItemColor: Colors.blueGrey,
+            unselectedItemColor: AppColors.black393939,
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -89,7 +89,7 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
                   colorFilter: ColorFilter.mode(
                       _tabController.index == 0
                           ? Colors.white
-                          : Colors.blueGrey,
+                          : AppColors.black393939,
                       BlendMode.srcIn),
                 ),
                 label: 'Play',
@@ -100,7 +100,9 @@ class _DashBoardScreenState extends ConsumerState<DashBoardScreen>
                   width: 16,
                   Assets.svg.icApp.path,
                   colorFilter: ColorFilter.mode(
-                    _tabController.index == 1 ? Colors.white : Colors.blueGrey,
+                    _tabController.index == 1
+                        ? Colors.white
+                        : AppColors.black393939,
                     BlendMode.srcIn,
                   ),
                 ),

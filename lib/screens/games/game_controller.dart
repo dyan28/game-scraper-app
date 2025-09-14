@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tap_two_play/common/core/constants.dart';
 import 'package:tap_two_play/models/game.dart';
 import 'package:tap_two_play/screens/games/game_state.dart';
+import 'package:tap_two_play/utils/utils.dart';
 
 part 'game_controller.g.dart';
 
@@ -9,21 +12,60 @@ part 'game_controller.g.dart';
 class GameController extends _$GameController {
   @override
   GameState build() {
-    Future.microtask(_fetchGame);
+    Future.microtask(_getData);
     return GameState();
   }
-  Future<void> _fetchGame() async {
+
+  void _getData() {
+    Future.wait([_fetchGame(), _fetchTopGame()]);
+  }
+
+  Future<void> _fetchTopGame() async {
     final supabase = Supabase.instance.client;
     try {
       state = state.copyWith(isLoading: true);
-      final data = await supabase.from('app_game').select()
-          .range(0, 12);
-      final games = data.map((e) => Game.fromJson(e)).toList();
+
+      final rows = await supabase
+          .from(Constants.APP_GAME)
+          .select('*')
+          .eq('in_top', true)
+          .order('updated', ascending: false);
+
+      final games = rows.map((e) => Game.fromJson(e)).toList();
       state = state.copyWith(
-          games: games, isLoading: false, gamePage: games.sublist(0, 3));
+        gamePage: games,
+        isLoading: false,
+      );
     } catch (e) {
       state = state.copyWith(isLoading: false);
       print(e);
     }
+  }
+
+  Future<void> _fetchGame() async {
+    final supabase = Supabase.instance.client;
+    try {
+      state = state.copyWith(isLoading: true);
+      var q = supabase
+          .from(Constants.APP_GAME) // ví dụ 'apps_game'
+          .select();
+
+      // 2) Chỉ thêm filter khi có genreId
+      if (state.category != CategoryGame.GAME) {
+        q = q.eq('genre_id', state.category.id);
+      }
+      final data = await q.limit(5);
+
+      final games = data.map((e) => Game.fromJson(e)).toList();
+      state = state.copyWith(games: games, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+      print(e);
+    }
+  }
+
+  Future<void> onChangePlayer(CategoryGame category) async {
+    state = state.copyWith(category: category);
+    await _fetchGame();
   }
 }

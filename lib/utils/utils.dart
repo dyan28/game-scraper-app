@@ -214,3 +214,47 @@ mixin Utils {
     FocusScope.of(context).requestFocus(FocusNode());
   }
 }
+
+enum CategoryGame {
+  GAME,
+  GAME_ACTION,
+  GAME_BOARD,
+  GAME_PUZZLE,
+  SPORTS,
+}
+
+extension CategoryExtension on CategoryGame {
+  String get name {
+    switch (this) {
+      case CategoryGame.GAME:
+        return 'Game🔥';
+      case CategoryGame.GAME_ACTION:
+        return 'Action ⚔️';
+      case CategoryGame.GAME_BOARD:
+        return 'Board 🎲';
+      case CategoryGame.GAME_PUZZLE:
+        return 'Puzzle🧩';
+      case CategoryGame.SPORTS:
+        return 'Sports ⚽';
+      default:
+        return '';
+    }
+  }
+
+  String get id {
+    switch (this) {
+      case CategoryGame.GAME:
+        return '';
+      case CategoryGame.GAME_ACTION:
+        return 'GAME_ACTION';
+      case CategoryGame.GAME_BOARD:
+        return 'GAME_BOARD';
+      case CategoryGame.GAME_PUZZLE:
+        return 'GAME_PUZZLE';
+      case CategoryGame.SPORTS:
+        return 'SPORTS';
+      default:
+        return '';
+    }
+  }
+}

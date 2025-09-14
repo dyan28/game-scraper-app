@@ -10,6 +10,9 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  errors:
+    constant_identifier_names: ignore
+    deprecated_member_use: ignore
   exclude:
     - lib/l10n/messages_*.dart
     - lib/l10n/l10n.dart

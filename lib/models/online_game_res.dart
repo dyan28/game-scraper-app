@@ -3,6 +3,7 @@ import 'dart:convert';
 
 
 class OnlineGameRes {
+  final int? id;
   final String? originalUrl;
   final String? title;
   final String? thumb;
@@ -13,7 +14,10 @@ class OnlineGameRes {
   final String? gameId;
   final String? embedUrl;
   final String? iframe;
+  final String? developer;
+
   OnlineGameRes({
+    this.id,
     this.originalUrl,
     this.title,
     this.thumb,
@@ -24,10 +28,12 @@ class OnlineGameRes {
     this.gameId,
     this.embedUrl,
     this.iframe,
+    this.developer,
   });
 
 
   OnlineGameRes copyWith({
+    int? id,
     String? originalUrl,
     String? title,
     String? thumb,
@@ -38,8 +44,10 @@ class OnlineGameRes {
     String? gameId,
     String? embedUrl,
     String? iframe,
+    String? developer,
   }) {
     return OnlineGameRes(
+      id: id ?? this.id,
       originalUrl: originalUrl ?? this.originalUrl,
       title: title ?? this.title,
       thumb: thumb ?? this.thumb,
@@ -50,6 +58,7 @@ class OnlineGameRes {
       gameId: gameId ?? this.gameId,
       embedUrl: embedUrl ?? this.embedUrl,
       iframe: iframe ?? this.iframe,
+      developer: developer ?? this.developer,
     );
   }
 
@@ -60,7 +69,7 @@ class OnlineGameRes {
       'thumb': thumb,
       'descriptionShort': descriptionShort,
       'descriptionLong': descriptionLong,
-      'releaseDate': releaseDate,
+      'release_date': releaseDate,
       'html5Url': html5Url,
       'gameId': gameId,
       'embedUrl': embedUrl,
@@ -70,16 +79,18 @@ class OnlineGameRes {
 
   factory OnlineGameRes.fromMap(Map<String, dynamic> map) {
     return OnlineGameRes(
-      originalUrl: map['originalUrl'] != null ? map['originalUrl'] as String : null,
+      id: map['id'] != null ? map['id'] as int : null,
+      originalUrl: map['original_url'] != null ? map['original_url'] as String : null,
       title: map['title'] != null ? map['title'] as String : null,
       thumb: map['thumb'] != null ? map['thumb'] as String : null,
-      descriptionShort: map['descriptionShort'] != null ? map['descriptionShort'] as String : null,
-      descriptionLong: map['descriptionLong'] != null ? map['descriptionLong'] as String : null,
-      releaseDate: map['releaseDate'] != null ? map['releaseDate'] as String : null,
-      html5Url: map['html5Url'] != null ? map['html5Url'] as String : null,
-      gameId: map['gameId'] != null ? map['gameId'] as String : null,
-      embedUrl: map['embedUrl'] != null ? map['embedUrl'] as String : null,
+      descriptionShort: map['description_short'] != null ? map['description_short'] as String : null,
+      descriptionLong: map['description_long'] != null ? map['description_long'] as String : null,
+      releaseDate: map['release_date'] != null ? map['release_date'] as String : null,
+      html5Url: map['html5_url'] != null ? map['html5_url'] as String : null,
+      gameId: map['game_id'] != null ? map['game_id'] as String : null,
+      embedUrl: map['embed_url'] != null ? map['embed_url'] as String : null,
       iframe: map['iframe'] != null ? map['iframe'] as String : null,
+      developer: map['developer'] != null ? map['developer'] as String : null,
     );
   }
 
