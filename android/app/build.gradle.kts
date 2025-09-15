@@ -86,13 +86,13 @@ android {
             dimension = "default"
             // nên có suffix để phân biệt gói dev
             applicationIdSuffix = ".dev"
-            resValue("string", "app_name", "[DEV] Tap2Play")
+            resValue("string", "app_name", "[DEV] ApkPul")
         }
 
         create("production") {
             dimension = "default"
             // không cần suffix cho prod
-            resValue("string", "app_name", "Tap2Play")
+            resValue("string", "app_name", "ApkPul")
         }
     }
 

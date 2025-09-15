@@ -13,13 +13,14 @@ import 'package:url_launcher/url_launcher.dart';
 class CustomDrawerMenu extends StatefulWidget {
   const CustomDrawerMenu({
     super.key,
-    this.appName = 'Tap2Play',
-    this.packageId = 'com.example.tap2play',
+    this.appName = 'ApkPul',
+    this.packageId = 'com.gnof.apkpul',
     this.playStoreUrl =
         'https://play.google.com/store/apps/details?id=com.example.tap2play',
+    this.termsUrl = 'https://modlegen.com/terms-of-service/',
     this.appStoreUrl = 'https://apps.apple.com/app/id0000000000',
-    this.dmcaUrl = 'https://yourdomain.com/dmca',
-    this.privacyUrl = 'https://yourdomain.com/privacy',
+    this.dmcaUrl = 'https://modlegen.com/dmca/',
+    this.privacyUrl = 'https://modlegen.com/privacy-policy/',
     this.feedbackEmail = 'support@yourdomain.com',
   });
 
@@ -29,6 +30,7 @@ class CustomDrawerMenu extends StatefulWidget {
   final String appStoreUrl;
   final String dmcaUrl;
   final String privacyUrl;
+  final String termsUrl;
   final String feedbackEmail;
 
   @override
@@ -180,6 +182,11 @@ class _CustomDrawerMenuState extends State<CustomDrawerMenu> {
             _tile(
               icon: Icons.privacy_tip_rounded,
               text: 'Policy & Privacy',
+              onTap: () => _openUrl(widget.privacyUrl),
+            ),
+             _tile(
+              icon: Icons.article_rounded,
+              text: 'Terms & Conditions',
               onTap: () => _openUrl(widget.privacyUrl),
             ),
             const Spacer(),
