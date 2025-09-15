@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:apk_pul/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
 
 class DataUsageHalfCirclePainter extends CustomPainter {
   final double percentage;

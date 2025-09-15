@@ -1,5 +1,5 @@
+import 'package:apk_pul/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GameMetaCard extends StatelessWidget {

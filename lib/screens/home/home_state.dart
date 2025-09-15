@@ -1,5 +1,5 @@
+import 'package:apk_pul/models/online_game_res.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tap_two_play/models/online_game_res.dart';
 
 part 'home_state.freezed.dart';
 

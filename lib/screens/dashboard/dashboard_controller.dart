@@ -1,6 +1,6 @@
+import 'package:apk_pul/screens/dashboard/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tap_two_play/screens/dashboard/dashboard_state.dart';
 
 part 'dashboard_controller.g.dart';
 

@@ -1,10 +1,10 @@
+import 'package:apk_pul/common/core/constants.dart';
+import 'package:apk_pul/models/game.dart';
+import 'package:apk_pul/screens/games/game_state.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tap_two_play/common/core/constants.dart';
-import 'package:tap_two_play/models/game.dart';
-import 'package:tap_two_play/screens/games/game_state.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 part 'game_controller.g.dart';
 

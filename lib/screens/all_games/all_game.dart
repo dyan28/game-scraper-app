@@ -1,14 +1,14 @@
+import 'package:apk_pul/components/loading_indicator.dart';
+import 'package:apk_pul/screens/all_games/all_games_controller.dart';
+import 'package:apk_pul/screens/game_detail/game_detail_screen.dart';
+import 'package:apk_pul/screens/games/components/store_game_tile.dart'
+    show StoreGameTile;
+import 'package:apk_pul/screens/games/game_controller.dart';
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/app_text_style.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tap_two_play/components/loading_indicator.dart';
-import 'package:tap_two_play/screens/all_games/all_games_controller.dart';
-import 'package:tap_two_play/screens/game_detail/game_detail_screen.dart';
-import 'package:tap_two_play/screens/games/components/store_game_tile.dart'
-    show StoreGameTile;
-import 'package:tap_two_play/screens/games/game_controller.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 class AllGame extends ConsumerStatefulWidget {
   const AllGame({super.key});

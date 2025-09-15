@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';

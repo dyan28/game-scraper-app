@@ -1,13 +1,13 @@
+import 'package:apk_pul/components/expandable_text.dart';
+import 'package:apk_pul/models/game.dart';
+import 'package:apk_pul/screens/game_detail/game_meta_card.dart';
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/app_text_style.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tap_two_play/components/expandable_text.dart';
-import 'package:tap_two_play/models/game.dart';
-import 'package:tap_two_play/screens/game_detail/game_meta_card.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 class GameDetailScreen extends ConsumerWidget with Utils {
   const GameDetailScreen({super.key, required this.game});

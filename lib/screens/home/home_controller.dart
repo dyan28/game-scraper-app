@@ -1,8 +1,8 @@
+import 'package:apk_pul/common/core/constants.dart';
+import 'package:apk_pul/models/online_game_res.dart';
+import 'package:apk_pul/screens/home/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tap_two_play/common/core/constants.dart';
-import 'package:tap_two_play/models/online_game_res.dart';
-import 'package:tap_two_play/screens/home/home_state.dart';
 
 part 'home_controller.g.dart';
 

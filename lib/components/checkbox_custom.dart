@@ -1,7 +1,7 @@
+import 'package:apk_pul/generated/assets.gen.dart';
+import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tap_two_play/generated/assets.gen.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
 
 class CheckboxCustom extends StatelessWidget {
   const CheckboxCustom({

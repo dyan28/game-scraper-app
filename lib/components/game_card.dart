@@ -1,11 +1,11 @@
+import 'package:apk_pul/models/online_game_res.dart';
+import 'package:apk_pul/screens/game_web_view_page.dart';
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/app_text_style.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tap_two_play/models/online_game_res.dart';
-import 'package:tap_two_play/screens/game_web_view_page.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 class GameCard extends StatelessWidget with Utils {
   const GameCard({super.key, required this.game});

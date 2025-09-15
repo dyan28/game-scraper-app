@@ -1,11 +1,11 @@
 import 'dart:math';
 
+import 'package:apk_pul/generated/fonts.gen.dart';
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/color_extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tap_two_play/generated/fonts.gen.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/color_extensions.dart';
 
 class BarChartHistory extends ConsumerStatefulWidget {
   BarChartHistory({super.key});

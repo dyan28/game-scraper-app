@@ -1,5 +1,5 @@
+import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
 
 class HighlightEnglishText extends StatelessWidget {
   const HighlightEnglishText({super.key, this.textData = ''});

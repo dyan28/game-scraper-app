@@ -1,6 +1,6 @@
+import 'package:apk_pul/generated/fonts.gen.dart';
+import 'package:apk_pul/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:tap_two_play/generated/fonts.gen.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
 
 class AppTextStyles {
   AppTextStyles._();

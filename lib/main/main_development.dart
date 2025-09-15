@@ -1,8 +1,8 @@
+import 'package:apk_pul/env/env_state.dart';
+import 'package:apk_pul/main/app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tap_two_play/env/env_state.dart';
-import 'package:tap_two_play/main/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

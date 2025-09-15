@@ -1,6 +1,6 @@
+import 'package:apk_pul/common/core/session/session_state.dart';
+import 'package:apk_pul/common/data/local_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tap_two_play/common/core/session/session_state.dart';
-import 'package:tap_two_play/common/data/local_secure_storage.dart';
 
 part 'session_controller.g.dart';
 

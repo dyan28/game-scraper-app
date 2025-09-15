@@ -1,7 +1,7 @@
+import 'package:apk_pul/components/game_card.dart';
+import 'package:apk_pul/models/online_game_res.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tap_two_play/components/game_card.dart';
-import 'package:tap_two_play/models/online_game_res.dart';
 
 class GameSearchDelegate extends SearchDelegate<OnlineGameRes?> {
   GameSearchDelegate({

@@ -1,7 +1,7 @@
+import 'package:apk_pul/api/network_resource_state/network_resource_state.dart';
+import 'package:apk_pul/models/game.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tap_two_play/api/network_resource_state/network_resource_state.dart';
-import 'package:tap_two_play/models/game.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 part 'all_games_state.freezed.dart';
 

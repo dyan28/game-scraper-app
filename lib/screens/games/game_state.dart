@@ -1,6 +1,6 @@
+import 'package:apk_pul/models/game.dart';
+import 'package:apk_pul/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tap_two_play/models/game.dart';
-import 'package:tap_two_play/utils/utils.dart';
 
 part 'game_state.freezed.dart';
 

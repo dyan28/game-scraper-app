@@ -1,7 +1,7 @@
+import 'package:apk_pul/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tap_two_play/generated/assets.gen.dart';
 
 class CommonAppbar extends PreferredSize {
   CommonAppbar({

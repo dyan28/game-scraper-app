@@ -1,9 +1,9 @@
+import 'package:apk_pul/generated/assets.gen.dart';
+import 'package:apk_pul/models/user_device.dart';
+import 'package:apk_pul/utils/app_colors.dart';
+import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tap_two_play/generated/assets.gen.dart';
-import 'package:tap_two_play/models/user_device.dart';
-import 'package:tap_two_play/utils/app_colors.dart';
-import 'package:tap_two_play/utils/app_text_style.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({

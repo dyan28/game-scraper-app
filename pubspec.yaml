@@ -1,4 +1,4 @@
-name: tap_two_play
+name: apk_pul
 description: "Ulink logistics User Mobile App"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -99,13 +99,13 @@ flutter_native_splash:
   ios: true
   web: true
   color: "#7FBC8A"
-  image: assets/images/app_logo.png
+  image: assets/images/app_icon.png
   ios_content_mode: center
   web_image_mode: center
   fullscreen: true
 
   android_12:
-    image: assets/images/android12splash.png
+    image: assets/images/app_icon.png
     icon_background_color: "#7FBC8A"
     color: "#7FBC8A"
 
