@@ -1,3 +1,4 @@
+import 'package:apk_pul/common/core/constants.dart';
 import 'package:apk_pul/components/ad_common.dart';
 import 'package:apk_pul/components/custom_drawer_menu.dart';
 import 'package:apk_pul/components/game_card.dart';
@@ -100,9 +101,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
             )
           : CustomScrollView(
               slivers: [
-                const SliverToBoxAdapter(
-                  child: SmartBanner(),
-                ),
+                if (showAdsBanner.value)
+                  const SliverToBoxAdapter(
+                    child: SmartBanner(),
+                  ),
                 // ===== GRID: HÀNG 1 =====
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
@@ -122,9 +124,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
                 ),
 
                 // ===== HÀNG 2: QUẢNG CÁO FULL-WIDTH =====
-                const SliverToBoxAdapter(
-                  child: AdBannerSlot(),
-                ),
+                if (showAdsBanner.value)
+                  const SliverToBoxAdapter(
+                    child: SmartBanner(),
+                  ),
 
                 // ===== GRID: CÁC HÀNG SAU =====
                 SliverPadding(

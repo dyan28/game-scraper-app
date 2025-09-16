@@ -11,6 +11,7 @@ class HomeState with _$HomeState {
     @Default(true) isLoading,
     @Default(<OnlineGameRes>[]) List<OnlineGameRes> gamesOnline,
     @Default('') String error,
+    @Default(false) bool isShowAdsBanner,
   }) = _HomeState;
 
   

@@ -1,9 +1,10 @@
+import 'package:apk_pul/common/core/constants.dart';
 import 'package:apk_pul/components/loading_indicator.dart';
+import 'package:apk_pul/components/smart_banner.dart';
 import 'package:apk_pul/screens/all_games/all_games_controller.dart';
 import 'package:apk_pul/screens/game_detail/game_detail_screen.dart';
 import 'package:apk_pul/screens/games/components/store_game_tile.dart'
     show StoreGameTile;
-import 'package:apk_pul/screens/games/game_controller.dart';
 import 'package:apk_pul/utils/app_colors.dart';
 import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:apk_pul/utils/utils.dart';
@@ -31,6 +32,7 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
   Widget build(BuildContext context) {
     final state = ref.watch(allGamesControllerProvider);
     final notifier = ref.read(allGamesControllerProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -94,6 +96,11 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
             state.games.maybeWhen(
               (listGame) {
                 final games = listGame ?? [];
+                const crossAxisCount = 2;
+
+                final firstRowCount = games.length >= crossAxisCount
+                    ? crossAxisCount
+                    : games.length;
                 if (games.isEmpty) {
                   return Expanded(
                     child: Center(
@@ -104,40 +111,94 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
                   );
                 }
                 return Expanded(
-                  child: GridView.builder(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      childAspectRatio: 0.9,
-                    ),
-                    itemCount: games.length,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          push(context, GameDetailScreen(game: games[index]));
-                        },
-                        child: Hero(
-                          tag: 'game-banner-${games[index].appId}$index',
-                          child: StoreGameTile(
-                            title: games[index].title ?? '',
-                            iconUrl: games[index].icon ?? '',
-                            bannerUrl: games[index].headerImage ??
-                                games[index].screenshots?.first ??
-                                '',
-                            rating: games[index].scoreText,
+                  child: CustomScrollView(
+                    slivers: [
+                      if (showAdsBanner.value)
+                        const SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: SmartBanner(),
                           ),
                         ),
-                      );
-                    },
+                      // ===== GRID: HÀNG 1 =====
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                        sliver: SliverGrid(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.86,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => GestureDetector(
+                              onTap: () {
+                                push(
+                                  context,
+                                  GameDetailScreen(game: games[index]),
+                                );
+                              },
+                              child: StoreGameTile(
+                                title: games[index].title ?? '',
+                                iconUrl: games[index].icon ?? '',
+                                bannerUrl: games[index].headerImage ??
+                                    games[index].screenshots?.first ??
+                                    '',
+                                rating: games[index].scoreText,
+                              ),
+                            ),
+                            childCount: 6, // chỉ 4 item đầu
+                          ),
+                        ),
+                      ),
+
+                      // ===== HÀNG 2: QUẢNG CÁO FULL-WIDTH =====
+                      if (showAdsBanner.value)
+                        const SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: SmartBanner(),
+                          ),
+                        ),
+
+                      // ===== GRID: CÁC HÀNG SAU =====
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                        sliver: SliverGrid(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.86,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, idx) {
+                              final game = games[firstRowCount + idx];
+                              return Hero(
+                                tag: 'game-banner-${game.appId}$idx',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    push(context, GameDetailScreen(game: game));
+                                  },
+                                  child: StoreGameTile(
+                                    title: game.title ?? '',
+                                    iconUrl: game.icon ?? '',
+                                    bannerUrl: game.headerImage ??
+                                        game.screenshots?.first ??
+                                        '',
+                                    rating: game.scoreText,
+                                  ),
+                                ),
+                              );
+                            },
+                            childCount: (games.length - firstRowCount)
+                                .clamp(0, games.length),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

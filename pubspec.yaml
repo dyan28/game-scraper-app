@@ -31,8 +31,7 @@ dependencies:
 
   intl: ^0.19.0
   carousel_slider: ^5.0.0
-  image_picker: ^1.1.2
-  dotted_border: ^2.1.0
+
   share_plus: ^10.1.4
   qr_flutter: ^4.1.0
 
@@ -41,8 +40,8 @@ dependencies:
   logger: ^2.5.0
   flutter_keyboard_visibility: ^6.0.0
   flutter_secure_storage: ^9.0.0
-  percent_indicator: ^4.2.5
-  fl_chart: ^0.71.0
+  
+
   card_swiper: ^3.0.1
   url_launcher: ^6.3.1
   flutter_launcher_icons: ^0.14.3

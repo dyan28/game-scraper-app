@@ -1,4 +1,5 @@
 import 'package:apk_pul/components/expandable_text.dart';
+import 'package:apk_pul/components/smart_banner.dart';
 import 'package:apk_pul/models/game.dart';
 import 'package:apk_pul/screens/game_detail/game_meta_card.dart';
 import 'package:apk_pul/utils/app_colors.dart';
@@ -128,6 +129,10 @@ class GameDetailScreen extends ConsumerWidget with Utils {
                   ),
                 ),
               ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: SmartBanner(),
             ),
             GameMetaCard(
               score: double.tryParse(game.scoreText ?? '') ?? 0,

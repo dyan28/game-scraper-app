@@ -1,4 +1,6 @@
+import 'package:apk_pul/common/core/constants.dart';
 import 'package:apk_pul/components/loading_indicator.dart';
+import 'package:apk_pul/components/smart_banner.dart';
 import 'package:apk_pul/screens/all_games/all_game.dart';
 import 'package:apk_pul/screens/game_detail/game_detail_screen.dart';
 import 'package:apk_pul/screens/games/components/store_game_tile.dart';
@@ -22,6 +24,9 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
   Widget build(BuildContext context) {
     final state = ref.watch(gameControllerProvider);
     final notifier = ref.read(gameControllerProvider.notifier);
+
+
+  
     return Scaffold(
       body: state.isLoading
           ? const Center(
@@ -79,6 +84,7 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                         ),
                       ),
                     ),
+                    if (showAdsBanner.value) const Center(child: SmartBanner()),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(

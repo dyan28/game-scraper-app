@@ -14,7 +14,9 @@ class _SmartBannerState extends State<SmartBanner> {
 
   static const _testBanner = 'ca-app-pub-3940256099942544/6300978111';
   String get _adUnitId =>
-      kReleaseMode ? 'ca-app-pub-3940256099942544/6300978111' : _testBanner;
+      kReleaseMode
+      ? 'ca-app-pub-3940256099942544/6300978111'
+      : 'ca-app-pub-3940256099942544/6300978111';
 
   @override
   void initState() {
