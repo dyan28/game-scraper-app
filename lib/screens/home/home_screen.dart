@@ -8,7 +8,9 @@ import 'package:apk_pul/main/app.dart';
 import 'package:apk_pul/models/online_game_res.dart';
 import 'package:apk_pul/screens/home/components/game_search_delegate.dart';
 import 'package:apk_pul/screens/home/home_controller.dart';
+import 'package:apk_pul/screens/home/home_state.dart';
 import 'package:apk_pul/utils/app_text_style.dart';
+import 'package:apk_pul/utils/force_update_guard.dart';
 import 'package:apk_pul/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,12 +29,53 @@ class HomeScreen extends ConsumerStatefulWidget with Utils {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
   late final AdManager _ads;
+  // Chặn hiển thị dialog lặp
+  bool _forceCheckedOnce = false;
+
+  // Hàm huỷ listener do listenManual trả về
+  late ProviderSubscription<HomeState> _sub;
   @override
   void initState() {
     super.initState();
     _forcePortrait();
     _ads = AdManager();
     _ads.preloadInterstitial();
+    _sub = ref.listenManual<HomeState>(
+      homeControllerProvider,
+      (prev, next) async {
+        final version = next.serverMinVersion;
+        if (!_forceCheckedOnce && (version.isNotEmpty)) {
+          _forceCheckedOnce = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            if (!mounted) return;
+            await ForceUpdateGuard.ensureUpToDate(
+              context,
+              serverMinVersion: version,
+              androidPackage: 'com.gnof.apkpul',
+              iosAppId: '1234567890',
+              note:
+                  'We released an important update to improve performance and security.',
+            );
+          });
+        }
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final s = ref.read(homeControllerProvider);
+      final version = s.serverMinVersion;
+      if (!_forceCheckedOnce && (version.isNotEmpty)) {
+        _forceCheckedOnce = true;
+        await ForceUpdateGuard.ensureUpToDate(
+          context,
+          serverMinVersion: version,
+          androidPackage: 'com.gnof.apkpul',
+          iosAppId: '1234567890',
+          note:
+              'We released an important update to improve performance and security.',
+        );
+      }
+    });
   }
 
   void _forcePortrait() {
@@ -48,6 +91,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
 
   @override
   void dispose() {
+    _sub.close();
     routeObserver.unsubscribe(this);
     super.dispose();
   }

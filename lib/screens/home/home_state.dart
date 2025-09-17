@@ -12,6 +12,7 @@ class HomeState with _$HomeState {
     @Default(<OnlineGameRes>[]) List<OnlineGameRes> gamesOnline,
     @Default('') String error,
     @Default(false) bool isShowAdsBanner,
+    @Default('') String serverMinVersion,
   }) = _HomeState;
 
   

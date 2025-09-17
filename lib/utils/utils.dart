@@ -8,6 +8,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+int compareVersions(String a, String b) {
+  a = a.split('+').first;
+  b = b.split('+').first;
+
+  List<int> pa = a.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+  List<int> pb = b.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+
+  while (pa.length < 3) pa.add(0);
+  while (pb.length < 3) pb.add(0);
+
+  for (int i = 0; i < 3; i++) {
+    if (pa[i] > pb[i]) return 1;
+    if (pa[i] < pb[i]) return -1;
+  }
+  return 0;
+}
+
 class Util {
   Util._();
   static String convertPrice(var price) {
@@ -22,6 +39,14 @@ class Util {
         u.hasScheme &&
         (u.scheme == 'http' || u.scheme == 'https') &&
         u.host.isNotEmpty;
+  }
+
+  static bool isFromPlay(String url) {
+    if (url.startsWith('https://play.google.com/') ||
+        url.contains('play.google.com')) {
+      return true;
+    }
+    return false;
   }
 
   static List<String> toUrlList(dynamic value) {
@@ -57,6 +82,43 @@ class Util {
     }
 
     return [];
+  }
+
+  static Future<void> openStore({required String androidPackage}) async {
+    final uri = Uri.parse(
+        'https://play.google.com/store/apps/details?id=$androidPackage');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      // Fallback: thử market:// (Android)
+      if (Platform.isAndroid) {
+        final market = Uri.parse('market://details?id=$androidPackage');
+        if (await canLaunchUrl(market)) {
+          await launchUrl(market, mode: LaunchMode.externalApplication);
+          return;
+        }
+      }
+      throw 'Can not open: $uri';
+    }
+  }
+
+  static Future<void> openStoreUrl({required String url}) async {
+    final uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      // Fallback: thử market:// (Android)
+      if (Platform.isAndroid) {
+        final market = Uri.parse(url);
+        if (await canLaunchUrl(market)) {
+          await launchUrl(market, mode: LaunchMode.externalApplication);
+          return;
+        }
+      }
+      throw 'Can not open: $uri';
+    }
   }
 
   static List<int> listYear() {

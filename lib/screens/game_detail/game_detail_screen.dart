@@ -1,5 +1,6 @@
 import 'package:apk_pul/components/expandable_text.dart';
 import 'package:apk_pul/components/smart_banner.dart';
+import 'package:apk_pul/generated/assets.gen.dart';
 import 'package:apk_pul/models/game.dart';
 import 'package:apk_pul/screens/game_detail/game_meta_card.dart';
 import 'package:apk_pul/utils/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class GameDetailScreen extends ConsumerWidget with Utils {
   const GameDetailScreen({super.key, required this.game});
@@ -118,15 +120,37 @@ class GameDetailScreen extends ConsumerWidget with Utils {
               height: 38,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (game.url != null && Util.isFromPlay(game.url!)) {
+                    Util.openStoreUrl(url: game.url!);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.buttonPrimaryGreenDark,
                 ),
-                child: Text(
-                  'Download',
-                  style: AppTextStyles.defaultMedium.copyWith(
-                    color: AppColors.white,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Download',
+                      style: AppTextStyles.defaultMedium.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    if (Util.isFromPlay(game.url!))
+                      SvgPicture.asset(
+                        Assets.svg.icGoogle.path,
+                        height: 20,
+                        width: 20,
+                      ),
+                    if (!Util.isFromPlay(game.url!))
+                      SvgPicture.asset(
+                        Assets.svg.icApk.path,
+                        height: 20,
+                        width: 20,
+                      ),
+                  ],
                 ),
               ),
             ),

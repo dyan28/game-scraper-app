@@ -48,7 +48,9 @@ class HomeController extends _$HomeController {
       final data = await supabase.from(Constants.APP_ADS).select().single();
 
       final gamesOnline = data['is_enabled'];
+      final serverMinVersion = data['app_version'].toString();
       showAdsBanner.value = gamesOnline as bool;
+      state = state.copyWith(serverMinVersion: serverMinVersion);
     } catch (e) {
       log('Errors: $e');
     }

@@ -25,8 +25,6 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
     final state = ref.watch(gameControllerProvider);
     final notifier = ref.read(gameControllerProvider.notifier);
 
-
-  
     return Scaffold(
       body: state.isLoading
           ? const Center(
@@ -78,6 +76,14 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                                 imageUrl:
                                     state.gamePage[index].headerImage ?? '',
                                 buttonText: "Download",
+                                onDownLoad: () {
+                                  if (state.gamePage[index].url != null &&
+                                      Util.isFromPlay(
+                                          state.gamePage[index].url!)) {
+                                    Util.openStoreUrl(
+                                        url: state.gamePage[index].url!);
+                                  }
+                                },
                               ),
                             );
                           },
@@ -140,6 +146,14 @@ class _GameDiscoveryPageState extends ConsumerState<GameDiscoveryPage>
                                     state.games[index].screenshots?.first ??
                                     '',
                                 rating: state.games[index].scoreText,
+                                onDownload: () {
+                                  if (state.games[index].url != null &&
+                                      Util.isFromPlay(
+                                          state.games[index].url!)) {
+                                    Util.openStoreUrl(
+                                        url: state.games[index].url!);
+                                  }
+                                },
                               ),
                             ),
                           );
@@ -186,6 +200,7 @@ class GameCard extends StatelessWidget with Utils {
   final String rating;
   final String imageUrl;
   final String buttonText;
+  final VoidCallback onDownLoad;
 
   const GameCard({
     super.key,
@@ -193,6 +208,7 @@ class GameCard extends StatelessWidget with Utils {
     required this.rating,
     required this.imageUrl,
     required this.buttonText,
+    required this.onDownLoad,
   });
 
   @override
@@ -264,7 +280,7 @@ class GameCard extends StatelessWidget with Utils {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: onDownLoad,
                     child: Text(buttonText),
                   ),
                 )

@@ -1,5 +1,4 @@
 import 'package:apk_pul/utils/app_colors.dart';
-import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -116,7 +115,7 @@ class StoreGameTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: onDownload,
                 child: Text(buttonText),
               ),
             ),

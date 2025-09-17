@@ -146,6 +146,12 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
                                     games[index].screenshots?.first ??
                                     '',
                                 rating: games[index].scoreText,
+                                onDownload: () {
+                                  if (games[index].url != null &&
+                                      Util.isFromPlay(games[index].url!)) {
+                                    Util.openStoreUrl(url: games[index].url!);
+                                  }
+                                },
                               ),
                             ),
                             childCount: 6, // chỉ 4 item đầu

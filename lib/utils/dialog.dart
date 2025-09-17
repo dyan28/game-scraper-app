@@ -1,4 +1,5 @@
 import 'package:apk_pul/components/custom_time_picker.dart';
+import 'package:apk_pul/utils/app_colors.dart';
 import 'package:apk_pul/utils/app_text_style.dart';
 import 'package:apk_pul/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +38,51 @@ class Dialogs with Utils {
 
     // when user cancel dialog, dialogResult is null.
     return dialogResult ?? false;
+  }
+
+  Future<void> showForceUpdateDialog(
+    BuildContext context, {
+    required String title,
+    String? message,
+    required String androidPackage,
+    String updateButtonLabel = 'Update now',
+    String? secondaryButtonLabel, // tùy chọn: 'Thoát ứng dụng'
+    VoidCallback? onSecondaryPressed, // ví dụ: SystemNavigator.pop
+  }) async {
+    // iOS/Android style
+    final dialog = WillPopScope(
+      onWillPop: () async => false, // chặn nút back
+      child: AlertDialog(
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        content: message != null ? Text(message) : null,
+        actions: [
+          if (secondaryButtonLabel != null)
+            TextButton(
+              onPressed: () {
+                if (onSecondaryPressed != null) onSecondaryPressed();
+              },
+              child: Text(secondaryButtonLabel),
+            ),
+          TextButton(
+            onPressed: () async {
+              await Util.openStore(androidPackage: androidPackage);
+            },
+            child: Text(
+              updateButtonLabel,
+              style: AppTextStyles.defaultMedium.copyWith(
+                color: AppColors.primaryGreenForest,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false, // không cho tắt khi bấm ra ngoài
+      builder: (_) => dialog,
+    );
   }
 
   Future<void> showError(
