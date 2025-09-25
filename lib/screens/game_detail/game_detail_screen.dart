@@ -1,3 +1,4 @@
+import 'package:apk_pul/common/core/constants.dart';
 import 'package:apk_pul/components/expandable_text.dart';
 import 'package:apk_pul/components/smart_banner.dart';
 import 'package:apk_pul/generated/assets.gen.dart';
@@ -154,6 +155,7 @@ class GameDetailScreen extends ConsumerWidget with Utils {
                 ),
               ),
             ),
+            if (showAdsBanner.value)
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: SmartBanner(),
