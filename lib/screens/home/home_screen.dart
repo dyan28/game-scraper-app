@@ -51,7 +51,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
             await ForceUpdateGuard.ensureUpToDate(
               context,
               serverMinVersion: version,
-              androidPackage: 'com.gnof.apkpul',
+              androidPackage: 'com.blazecore.apkblaze',
               iosAppId: '1234567890',
               note:
                   'We released an important update to improve performance and security.',
@@ -69,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with RouteAware {
         await ForceUpdateGuard.ensureUpToDate(
           context,
           serverMinVersion: version,
-          androidPackage: 'com.gnof.apkpul',
+          androidPackage: 'com.blazecore.apkblaze',
           iosAppId: '1234567890',
           note:
               'We released an important update to improve performance and security.',

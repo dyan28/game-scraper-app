@@ -13,8 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 class CustomDrawerMenu extends StatefulWidget {
   const CustomDrawerMenu({
     super.key,
-    this.appName = 'ApkPul',
-    this.packageId = 'com.gnof.apkpul',
+    this.appName = 'ApkBlaze',
+    this.packageId = 'com.blazecore.apkblaze',
     this.playStoreUrl =
         'https://play.google.com/store/apps/details?id=com.example.tap2play',
     this.termsUrl = 'https://modlegen.com/terms-of-service/',

@@ -1,4 +1,4 @@
-package com.gnof.apkpul
+package com.blazecore.apkblaze
 
 import io.flutter.embedding.android.FlutterActivity
 
