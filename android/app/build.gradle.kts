@@ -92,7 +92,7 @@ android {
         create("production") {
             dimension = "default"
             // không cần suffix cho prod
-            resValue("string", "app_name", "ApkBlaze")
+            resValue("string", "app_name", "MODLEGEN")
         }
     }
 

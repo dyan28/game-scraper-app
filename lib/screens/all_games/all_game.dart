@@ -96,7 +96,7 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
             state.games.maybeWhen(
               (listGame) {
                 final games = listGame ?? [];
-                const crossAxisCount = 2;
+                var crossAxisCount = games.length >= 2 ? 2 : games.length;
 
                 final firstRowCount = games.length >= crossAxisCount
                     ? crossAxisCount
@@ -125,7 +125,7 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                         sliver: SliverGrid(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: crossAxisCount,
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
@@ -154,7 +154,7 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
                                 },
                               ),
                             ),
-                            childCount: 6, // chỉ 4 item đầu
+                            childCount: 6, // chỉ 4 item đầu`
                           ),
                         ),
                       ),
@@ -173,7 +173,7 @@ class _AllGameState extends ConsumerState<AllGame> with Utils {
                         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                         sliver: SliverGrid(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: crossAxisCount,
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
